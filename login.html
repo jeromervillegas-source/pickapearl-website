@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Pearl Museum - Admin Login</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<style>
+  * { margin:0; padding:0; box-sizing:border-box; font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
+
+  body {
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    overflow: hidden;
+    background: #ffffff;
+    color: #7a5c29; /* default text color matches logo */
+  }
+
+  /* Logo watermark */
+  .logo-watermark {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 400px;
+    height: 200px;
+    background: url("image/logo.png") no-repeat center center / contain;
+    opacity: 0.08;
+    transform: translate(-50%, -50%);
+    z-index: 0;
+    pointer-events: none;
+  }
+
+  .login-container {
+    z-index: 2;
+    width: 100%;
+    max-width: 400px;
+    padding: 20px;
+  }
+
+  .box {
+    background: #f9f9f9;
+    border-radius: 20px;
+    padding: 40px 30px; /* more padding for bigger logo */
+    box-shadow: 0 8px 30px rgba(0,0,0,0.15);
+    border: 1px solid rgba(122,92,41,0.25);
+  }
+
+  .logo {
+    text-align: center;
+    margin-bottom: 30px;
+  }
+
+  .logo img.login-logo {
+    width: 60%;         /* scales with container */
+    max-width: 220px;   /* increased maximum width */
+    height: auto;       /* maintain aspect ratio */
+    display: block;
+    margin: 0 auto 20px;
+  }
+
+  .input-group {
+    position: relative;
+    margin-bottom: 20px;
+  }
+
+  .input-group i {
+    position: absolute;
+    left: 15px;
+    top: 12px;
+    color: #7a5c29;
+  }
+
+  .input-group input {
+    width: 100%;
+    padding: 12px 15px 12px 45px;
+    border-radius: 8px;
+    border: 1px solid rgba(122,92,41,0.25);
+    background: #ffffff;
+    color: #7a5c29;
+    font-size: 1rem;
+  }
+
+  .input-group input:focus {
+    outline: none;
+    border-color: #7a5c29;
+    box-shadow: 0 0 12px rgba(122,92,41,0.4);
+  }
+
+  .input-group input::placeholder {
+    color: rgba(122,92,41,0.5);
+  }
+
+  .btn-login {
+    width: 100%;
+    padding: 12px;
+    margin-top: 10px;
+    background: #7a5c29;
+    color: #ffffff;
+    border: none;
+    border-radius: 8px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+  }
+
+  .btn-login:hover {
+    background: #ffffff;
+    color: #7a5c29;
+    transform: translateY(-2px);
+  }
+
+  .links {
+    margin-top: 20px;
+    text-align: center;
+  }
+
+  .links a {
+    color: #7a5c29;
+    text-decoration: none;
+    font-size: 0.9rem;
+  }
+
+  .links a:hover {
+    text-decoration: underline;
+  }
+
+  .footer {
+    margin-top: 25px;
+    font-size: 0.8rem;
+    color: rgba(122,92,41,0.6);
+    text-align: center;
+  }
+
+  @media (max-width: 480px) {
+    .box { width: 340px; }
+    .logo img.login-logo { width: 70%; max-width: 180px; } /* responsive for small screens */
+  }
+</style>
+</head>
+<body>
+
+  <!-- Logo watermark -->
+  <div class="logo-watermark"></div>
+
+  <div class="login-container">
+    <div class="box">
+      <div class="box-content">
+        <div class="logo">
+          <img src="image/logo.png" alt="Pick a Pearl P Logo" class="login-logo">
+        </div>
+
+        <form id="loginForm">
+          <div class="input-group">
+            <i class="fas fa-user"></i>
+            <input type="text" placeholder="Username" required>
+          </div>
+
+          <div class="input-group">
+            <i class="fas fa-lock"></i>
+            <input type="password" placeholder="Password" required>
+          </div>
+
+          <button type="submit" class="btn-login">Login</button>
+
+          <div class="links">
+            <a href="#"><i class="fas fa-key"></i> Forgot Password?</a>
+          </div>
+        </form>
+
+        <div class="footer">
+          <p>&copy; 2025 Pick a Pearl. All rights reserved.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+<script>
+document.getElementById('loginForm').addEventListener('submit', function(e){
+  e.preventDefault();
+  const username = this.querySelector('input[type="text"]').value;
+  const password = this.querySelector('input[type="password"]').value;
+  const btn = this.querySelector('.btn-login');
+
+  btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Logging in...';
+  btn.disabled = true;
+
+  setTimeout(() => {
+    if(username && password) alert('Login successful!');
+    else alert('Enter both username and password.');
+    btn.innerHTML = 'Login';
+    btn.disabled = false;
+  }, 1500);
+});
+</script>
+</body>
+</html>
