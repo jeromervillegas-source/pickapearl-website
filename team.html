@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Our Team - PickAPearl Museum</title>
+    <style>
+        body {
+            font-family: 'Cormorant Garamond', serif;
+            background-color: #f8f8f8;
+            margin: 0;
+            padding: 20px;
+        }
+        .org-title {
+            text-align: center;
+            margin-bottom: 40px;
+            padding: 20px 0;
+            background: linear-gradient(135deg, rgba(212,175,55,0.1) 0%, rgba(212,175,55,0.05) 100%);
+            border-radius: 8px;
+            border-bottom: 3px solid #d4af37;
+        }
+        .org-title h1 {
+            color: #d4af37; /* Gold color */
+            font-size: 36px;
+            margin-bottom: 5px;
+            text-shadow: 1px 1px 3px rgba(0,0,0,0.1);
+            letter-spacing: 1px;
+        }
+        .org-title p {
+            color: #a78b3a; /* Lighter gold/dark beige */
+            font-style: italic;
+            margin-top: 0;
+            font-size: 18px;
+        }
+        .org-chart {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        .org-level {
+            display: flex;
+            justify-content: center;
+            margin: 20px 0;
+            flex-wrap: wrap;
+        }
+        .employee {
+            text-align: center;
+            margin: 15px;
+            width: 180px;
+            position: relative;
+        }
+        .employee img {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 3px solid #d4af37;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+        .employee h3 {
+            margin: 10px 0 5px;
+            color: #1a1a1a;
+            font-size: 16px;
+        }
+        .employee p {
+            margin: 0;
+            color: #5d5d5d;
+            font-size: 12px;
+        }
+        .connector-line {
+            height: 30px;
+            width: 2px;
+            background-color: #d4af37;
+            margin: 0 auto;
+        }
+        .horizontal-connector {
+            width: 100%;
+            height: 2px;
+            background-color: #d4af37;
+            position: absolute;
+            top: -15px;
+            left: 0;
+        }
+        
+        /* Download button styles */
+        .download-container {
+            text-align: center;
+            margin: 40px 0;
+        }
+        .download-btn {
+            background-color: #d4af37;
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            font-size: 16px;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            font-family: 'Cormorant Garamond', serif;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+        }
+        .download-btn:hover {
+            background-color: #b8941f;
+        }
+        .download-btn:active {
+            transform: translateY(1px);
+        }
+    </style>
+</head>
+<body>
+   
+    <!-- Gold Title Section -->
+    <div class="org-title">
+        <h1>"This organizational chart pertains solely to the Boracay branch and may be modified in accordance with operational requirements."</h1>
+        <p>Leadership Structure • Established 2025</p>
+    </div>
+    
+    <div class="org-chart" id="org-chart">
+        <!-- Second Level -->
+        <div class="org-level">
+            <div class="employee">
+                <img src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?ixlib=rb-1.2.1&auto=format&fit=crop&w=634&q=80" alt="Financial">
+                <h3>Susana Nepumoceno</h3>
+                <p>Financial Manager</p>
+            </div>
+            <div class="employee">
+                <img src="https://images.unsplash.com/photo-1560250097-0b93528c311a?ixlib=rb-1.2.1&auto=format&fit=crop&w=634&q=80" alt="General">
+                <h3>Arnold Nepumoceno</h3>
+                <p>General Manager</p>
+            </div>
+        </div>
+        
+        <div class="connector-line"></div>
+        
+        <!-- Third Level -->
+        <div class="org-level">
+            <div class="employee">
+                <div class="horizontal-connector"></div>
+                <img src="https://images.unsplash.com/photo-1546820389-44d77e1f3b31?ixlib=rb-1.2.1&auto=format&fit=crop&w=634&q=80" alt="Manager">
+                <h3>Michael Francisco Villegas</h3>
+                <p>Manager</p>
+            </div>
+        </div>
+        
+        <div class="connector-line"></div>
+        
+        <!-- Fourth Level -->
+        <div class="org-level">
+            <div class="employee">
+                <img src="Oraganizational chart picture/anne.png" alt="Assistant Sales">
+                <h3>Annie Cabuslay</h3>
+                <p>Assistant Sales Manager</p>
+            </div>
+            <div class="employee">
+                <img src="Oraganizational chart picture/nena.png" alt="Administrative">
+                <h3>Nena Bernisto</h3>
+                <p>Administrative Officer</p>
+            </div>
+        </div>
+        
+        <div class="connector-line"></div>
+        
+        <!-- Fifth Level -->
+        <div class="org-level">
+            <div class="employee">
+                <img src="Oraganizational chart picture/arcris.png" alt="Supervisor">
+                <h3>Arcris Giron</h3>
+                <p>Sales Supervisor</p>
+            </div>
+            <div class="employee">
+                <img src="Oraganizational chart picture/rica.png" alt="Supervisor">
+                <h3>Rica Deo</h3>
+                <p>Sales Supervisor</p>
+            </div>
+            <div class="employee">
+                <img src="Oraganizational chart picture/jez.png" alt="Supervisor">
+                <h3>Jessebel Lomugda</h3>
+                <p>Sales Supervisor</p>
+            </div>
+        </div>
+        
+        <div class="connector-line"></div>
+        
+        <!-- Sixth Level -->
+        <div class="org-level">
+            <div class="employee">
+                <img src="Oraganizational chart picture/iko.png" alt="Assistant Supervisor">
+                <h3>Iko Novero</h3>
+                <p>Assistant Supervisor</p>
+            </div>
+        </div>
+        
+        <div class="connector-line"></div>
+        
+        <!-- Seventh Level -->
+        <div class="org-level">
+            <div class="employee">
+                <img src="Oraganizational chart picture/vea.png" alt="Data Entry">
+                <h3>Vea Mae Casuncad</h3>
+                <p>Data Entry Clerk</p>
+            </div>
+        </div>
+        
+        <div class="connector-line"></div>
+        
+        <!-- Eighth Level -->
+        <div class="org-level">
+            <div class="employee">
+                <img src="Oraganizational chart picture/chen.png" alt="Sales Clerk">
+                <h3>Jessica Depita</h3>
+                <p>Sales Clerk</p>
+            </div>
+            <div class="employee">
+                <img src="Oraganizational chart picture/ellaine.png" alt="Sales Clerk">
+                <h3>Ellaine Joy Mayor</h3>
+                <p>Sales Clerk</p>
+            </div>
+            <div class="employee">
+                <img src="Oraganizational chart picture/joy.png" alt="Sales Clerk">
+                <h3>Jona Dumali</h3>
+                <p>Sales Clerk</p>
+            </div>
+            <div class="employee">
+                <img src="Oraganizational chart picture/elena.png" alt="Sales Clerk">
+                <h3>Ma. Elena Parreñas</h3>
+                <p>Sales Clerk</p>
+            </div>
+            <div class="employee">
+                <img src="Oraganizational chart picture/jolina.png" alt="Sales Clerk">
+                <h3>Julina Magtanum</h3>
+                <p>Sales Clerk</p>
+            </div>
+            <div class="employee">
+                <img src="image/blackhat.jpg" alt="Sales Clerk">
+                <h3>Jerome Villegas</h3>
+                <p>Sales Clerk</p>
+            </div>
+            <div class="employee">
+                <img src="Oraganizational chart picture/rom.png" alt="Trainee">
+                <h3>Romelyn Samson</h3>
+                <p>Sales Clerk</p>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Download Button -->
+    <div class="download-container">
+        <button id="downloadBtn" class="download-btn">Download as PNG</button>
+    </div>
+
+    <!-- Include html2canvas library -->
+    <script src="https://html2canvas.hertzen.com/dist/html2canvas.min.js"></script>
+    <script>
+        document.getElementById('downloadBtn').addEventListener('click', function() {
+            // Capture the organizational chart
+            html2canvas(document.getElementById('org-chart')).then(function(canvas) {
+                // Create a download link
+                var link = document.createElement('a');
+                link.download = 'PickAPearl-Organizational-Chart.png';
+                link.href = canvas.toDataURL('image/png');
+                link.click();
+            });
+        });
+    </script>
+</body>
+</html>
