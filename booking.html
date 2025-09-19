@@ -1,0 +1,776 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Book Your Pearl Experience</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f8f9fa;
+            color: #333;
+        }
+        .booking-container {
+            max-width: 1000px;
+            margin: 30px auto;
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 0 20px rgba(0,0,0,0.1);
+        }
+        .section-title {
+            color: #2c3e50;
+            border-bottom: 2px solid #3498db;
+            padding-bottom: 10px;
+            margin-top: 30px;
+        }
+        .option-group {
+            background-color: #f8f9fa;
+            border-radius: 8px;
+            padding: 20px;
+            margin-bottom: 20px;
+            border: 1px solid #eee;
+        }
+        .sub-options {
+            margin-top: 15px;
+            padding-left: 20px;
+            border-left: 3px solid #3498db;
+        }
+        .confirmation {
+            display: none;
+            background-color: #d4edda;
+            padding: 20px;
+            border-radius: 5px;
+            margin-top: 20px;
+        }
+        .form-control:invalid, .form-select:invalid {
+            border-color: #dc3545;
+        }
+        .form-control:invalid:focus, .form-select:invalid:focus {
+            border-color: #dc3545;
+            box-shadow: 0 0 0 0.25rem rgba(220,53,69,.25);
+        }
+        .is-invalid {
+            border-color: #dc3545 !important;
+        }
+        .invalid-feedback {
+            display: none;
+            width: 100%;
+            margin-top: 0.25rem;
+            font-size: 0.875em;
+            color: #dc3545;
+        }
+        .was-validated .form-control:invalid ~ .invalid-feedback,
+        .was-validated .form-control:invalid ~ .invalid-tooltip,
+        .was-validated .form-select:invalid ~ .invalid-feedback,
+        .was-validated .form-select:invalid ~ .invalid-tooltip {
+            display: block;
+        }
+        #nationalitySuggestions {
+            position: absolute;
+            z-index: 1000;
+            background: white;
+            width: calc(100% - 30px);
+            max-height: 200px;
+            overflow-y: auto;
+            border: 1px solid #ddd;
+            border-radius: 0 0 4px 4px;
+            display: none;
+        }
+        .suggestion-item {
+            padding: 8px 15px;
+            cursor: pointer;
+        }
+        .suggestion-item:hover {
+            background-color: #f0f0f0;
+        }
+        .booking-code {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: #2c3e50;
+            background-color: #f8f9fa;
+            padding: 10px;
+            border-radius: 5px;
+            text-align: center;
+            margin: 15px 0;
+        }
+        .cancel-btn {
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="booking-container">
+        <h1 class="text-center mb-4">Book Your Pearl Experience</h1>
+        
+        <form id="bookingForm" class="needs-validation" novalidate>
+            <!-- Personal Information Section -->
+            <h2 class="section-title">Personal Information</h2>
+            <div class="row">
+                <div class="col-md-6 mb-3">
+                    <label for="name" class="form-label">Full Name *</label>
+                    <input type="text" class="form-control" id="name" required>
+                    <div class="invalid-feedback">
+                        Please provide your full name.
+                    </div>
+                </div>
+                <div class="col-md-6 mb-3">
+                    <label for="email" class="form-label">Email *</label>
+                    <input type="email" class="form-control" id="email" required>
+                    <div class="invalid-feedback">
+                        Please provide a valid email.
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-6 mb-3">
+                    <label for="phone" class="form-label">Phone Number *</label>
+                    <input type="tel" class="form-control" id="phone" required>
+                    <div class="invalid-feedback">
+                        Please provide your phone number.
+                    </div>
+                </div>
+                <div class="col-md-6 mb-3">
+                    <label for="nationality" class="form-label">Nationality *</label>
+                    <input type="text" class="form-control" id="nationality" required autocomplete="off">
+                    <div id="nationalitySuggestions"></div>
+                    <div class="invalid-feedback">
+                        Please provide your nationality.
+                    </div>
+                </div>
+            </div>
+
+            <!-- Visit Details Section -->
+            <h2 class="section-title">Visit Details</h2>
+            <div class="row">
+                <div class="col-md-4 mb-3">
+                    <label for="visitDate" class="form-label">Visit Date *</label>
+                    <input type="date" class="form-control" id="visitDate" required>
+                    <div class="invalid-feedback">
+                        Please select a visit date.
+                    </div>
+                </div>
+                <div class="col-md-4 mb-3">
+                    <label for="visitTime" class="form-label">Visit Time *</label>
+                    <input type="time" class="form-control" id="visitTime" required>
+                    <div class="invalid-feedback">
+                        Please select a visit time.
+                    </div>
+                </div>
+                <div class="col-md-4 mb-3">
+                    <label for="location" class="form-label">Location to Visit *</label>
+                    <select class="form-select" id="location" required>
+                        <option value="" selected disabled>Select Location</option>
+                        <option value="Coron/Sinamay">Coron/Sinamay</option>
+                        <option value="Celebrity Club">Celebrity Club</option>
+                        <option value="Boracay">Boracay</option>
+                    </select>
+                    <div class="invalid-feedback">
+                        Please select a location.
+                    </div>
+                </div>
+            </div>
+
+            <!-- Experience Selection Section -->
+            <h2 class="section-title">Choose Your Experience</h2>
+            
+            <!-- Visit Only Option -->
+            <div class="option-group">
+                <div class="form-check">
+                    <input class="form-check-input experience-type" type="radio" name="experienceType" id="visitOnly" value="visitOnly" checked>
+                    <label class="form-check-label" for="visitOnly">
+                        <strong>Visit Only</strong> (General tour without specific experience)
+                    </label>
+                </div>
+            </div>
+            
+            <!-- Pearl Museum Visit -->
+            <div class="option-group">
+                <div class="form-check">
+                    <input class="form-check-input experience-type" type="radio" name="experienceType" id="museumVisit" value="museum">
+                    <label class="form-check-label" for="museumVisit">
+                        <strong>Pearl Museum Visit</strong>
+                    </label>
+                </div>
+                
+                <div id="museumOptions" class="sub-options" style="display: none;">
+                    <div class="form-check">
+                        <input class="form-check-input museum-choice" type="radio" name="museumChoice" id="coronMuseum" value="coronMuseum">
+                        <label class="form-check-label" for="coronMuseum">
+                            Coron/Sinamay Pearl Museum
+                        </label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input museum-choice" type="radio" name="museumChoice" id="boracayMuseum" value="boracayMuseum">
+                        <label class="form-check-label" for="boracayMuseum">
+                            Boracay Pearl Museum
+                        </label>
+                    </div>
+                    <div class="invalid-feedback museum-invalid">
+                        Please select a museum option.
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Pearl Farm Experience -->
+            <div class="option-group">
+                <div class="form-check">
+                    <input class="form-check-input experience-type" type="radio" name="experienceType" id="farmExperience" value="farm">
+                    <label class="form-check-label" for="farmExperience">
+                        <strong>Pearl Farm Experience</strong>
+                    </label>
+                </div>
+                
+                <div id="farmOptions" class="sub-options" style="display: none;">
+                    <div class="form-check">
+                        <input class="form-check-input farm-choice" type="radio" name="farmChoice" id="bigClam" value="bigClam">
+                        <label class="form-check-label" for="bigClam">
+                            Big Clam
+                        </label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input farm-choice" type="radio" name="farmChoice" id="smallClam" value="smallClam">
+                        <label class="form-check-label" for="smallClam">
+                            Small Clam
+                        </label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input farm-choice" type="radio" name="farmChoice" id="oyster" value="oyster">
+                        <label class="form-check-label" for="oyster">
+                            Oyster
+                        </label>
+                    </div>
+                    <div class="invalid-feedback farm-invalid">
+                        Please select a farm experience option.
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Pearl Customization Experience -->
+            <div class="option-group">
+                <div class="form-check">
+                    <input class="form-check-input experience-type" type="radio" name="experienceType" id="customizeExperience" value="customize">
+                    <label class="form-check-label" for="customizeExperience">
+                        <strong>Pearl Customization</strong>
+                    </label>
+                </div>
+                
+                <div id="customizeOptions" class="sub-options" style="display: none;">
+                    <!-- Pearl Type Selection -->
+                    <div class="mb-4">
+                        <label class="form-label"><strong>Select Pearl Type:</strong></label>
+                        <div class="row">
+                            <div class="col-md-3 col-6 mb-2">
+                                <div class="form-check">
+                                    <input class="form-check-input pearl-type" type="radio" name="pearlType" id="freshwater" value="freshwater">
+                                    <label class="form-check-label" for="freshwater">
+                                        Freshwater
+                                    </label>
+                                </div>
+                            </div>
+                            <div class="col-md-3 col-6 mb-2">
+                                <div class="form-check">
+                                    <input class="form-check-input pearl-type" type="radio" name="pearlType" id="akoya" value="akoya">
+                                    <label class="form-check-label" for="akoya">
+                                        Akoya
+                                    </label>
+                                </div>
+                            </div>
+                            <div class="col-md-3 col-6 mb-2">
+                                <div class="form-check">
+                                    <input class="form-check-input pearl-type" type="radio" name="pearlType" id="southsea" value="southsea">
+                                    <label class="form-check-label" for="southsea">
+                                        South Sea
+                                    </label>
+                                </div>
+                            </div>
+                            <div class="col-md-3 col-6 mb-2">
+                                <div class="form-check">
+                                    <input class="form-check-input pearl-type" type="radio" name="pearlType" id="tahitian" value="tahitian">
+                                    <label class="form-check-label" for="tahitian">
+                                        Tahitian
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="invalid-feedback pearl-invalid">
+                            Please select a pearl type.
+                        </div>
+                    </div>
+                    
+                    <!-- Material Selection (Checkboxes) -->
+                    <div class="mb-4">
+                        <label class="form-label"><strong>Select Material (Optional):</strong></label>
+                        <div class="row">
+                            <div class="col-md-3 col-6 mb-2">
+                                <div class="form-check">
+                                    <input class="form-check-input material" type="checkbox" name="material" id="gold" value="gold">
+                                    <label class="form-check-label" for="gold">
+                                        Gold
+                                    </label>
+                                </div>
+                            </div>
+                            <div class="col-md-3 col-6 mb-2">
+                                <div class="form-check">
+                                    <input class="form-check-input material" type="checkbox" name="material" id="silver" value="silver">
+                                    <label class="form-check-label" for="silver">
+                                        Silver
+                                    </label>
+                                </div>
+                            </div>
+                            <div class="col-md-3 col-6 mb-2">
+                                <div class="form-check">
+                                    <input class="form-check-input material" type="checkbox" name="material" id="stainless" value="stainless">
+                                    <label class="form-check-label" for="stainless">
+                                        Stainless
+                                    </label>
+                                </div>
+                            </div>
+                            <div class="col-md-3 col-6 mb-2">
+                                <div class="form-check">
+                                    <input class="form-check-input material" type="checkbox" name="material" id="leather" value="leather">
+                                    <label class="form-check-label" for="leather">
+                                        Leather
+                                    </label>
+                                </div>
+                            </div>
+                            <div class="col-md-3 col-6 mb-2">
+                                <div class="form-check">
+                                    <input class="form-check-input material" type="checkbox" name="material" id="leatherette" value="leatherette">
+                                    <label class="form-check-label" for="leatherette">
+                                        Leatherette
+                                    </label>
+                                </div>
+                            </div>
+                            <div class="col-md-3 col-6 mb-2">
+                                <div class="form-check">
+                                    <input class="form-check-input material" type="checkbox" name="material" id="japaneseWire" value="japaneseWire">
+                                    <label class="form-check-label" for="japaneseWire">
+                                        Japanese Wire
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Jewelry Selection -->
+                    <div class="mb-4">
+                        <label class="form-label"><strong>Select Jewelry (Optional):</strong></label>
+                        <div class="row">
+                            <div class="col-md-3 col-6 mb-2">
+                                <div class="form-check">
+                                    <input class="form-check-input jewelry" type="checkbox" name="jewelry" id="necklaceSet" value="necklaceSet">
+                                    <label class="form-check-label" for="necklaceSet">
+                                        Necklace Set
+                                    </label>
+                                </div>
+                            </div>
+                            <div class="col-md-3 col-6 mb-2">
+                                <div class="form-check">
+                                    <input class="form-check-input jewelry" type="checkbox" name="jewelry" id="earrings" value="earrings">
+                                    <label class="form-check-label" for="earrings">
+                                        Earrings
+                                    </label>
+                                </div>
+                            </div>
+                            <div class="col-md-3 col-6 mb-2">
+                                <div class="form-check">
+                                    <input class="form-check-input jewelry" type="checkbox" name="jewelry" id="choker" value="choker">
+                                    <label class="form-check-label" for="choker">
+                                        Choker
+                                    </label>
+                                </div>
+                            </div>
+                            <div class="col-md-3 col-6 mb-2">
+                                <div class="form-check">
+                                    <input class="form-check-input jewelry" type="checkbox" name="jewelry" id="bracelet" value="bracelet">
+                                    <label class="form-check-label" for="bracelet">
+                                        Bracelet
+                                    </label>
+                                </div>
+                            </div>
+                            <div class="col-md-3 col-6 mb-2">
+                                <div class="form-check">
+                                    <input class="form-check-input jewelry" type="checkbox" name="jewelry" id="ring" value="ring">
+                                    <label class="form-check-label" for="ring">
+                                        Ring
+                                    </label>
+                                </div>
+                            </div>
+                            <div class="col-md-3 col-6 mb-2">
+                                <div class="form-check">
+                                    <input class="form-check-input jewelry" type="checkbox" name="jewelry" id="pendant" value="pendant">
+                                    <label class="form-check-label" for="pendant">
+                                        Pendant
+                                    </label>
+                                </div>
+                            </div>
+                            <div class="col-md-3 col-6 mb-2">
+                                <div class="form-check">
+                                    <input class="form-check-input jewelry" type="checkbox" name="jewelry" id="brooch" value="brooch">
+                                    <label class="form-check-label" for="brooch">
+                                        Brooch
+                                    </label>
+                                </div>
+                            </div>
+                            <div class="col-md-3 col-6 mb-2">
+                                <div class="form-check">
+                                    <input class="form-check-input jewelry" type="checkbox" name="jewelry" id="longNecklace" value="longNecklace">
+                                    <label class="form-check-label" for="longNecklace">
+                                        Long Necklace
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Customization Notes -->
+                    <div class="mb-3">
+                        <label for="customNotes" class="form-label">Special Requests/Customization Notes:</label>
+                        <textarea class="form-control" id="customNotes" rows="3"></textarea>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Submit Button -->
+            <div class="text-center mt-4">
+                <button type="submit" class="btn btn-primary btn-lg">Book Now</button>
+            </div>
+        </form>
+
+        <!-- Confirmation Section -->
+        <div id="confirmation" class="confirmation">
+            <h2 class="text-center">Thank You for Your Booking!</h2>
+            <p class="text-center">We've sent the details to your email.</p>
+            <div class="booking-code">Your Booking Code: <span id="bookingCodeDisplay"></span></div>
+            <div id="bookingSummary" class="mt-4"></div>
+            <div class="text-center mt-4">
+                <button id="cancelBookingBtn" class="btn btn-danger cancel-btn">Cancel Booking</button>
+                <a href="index.html" class="btn btn-secondary">Return to Home</a>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        // Nationality suggestions
+        const nationalities = [
+            "Afghan", "Albanian", "Algerian", "American", "Andorran", "Angolan", 
+            "Antiguans", "Argentinean", "Armenian", "Australian", "Austrian", 
+            "Azerbaijani", "Bahamian", "Bahraini", "Bangladeshi", "Barbadian", 
+            "Barbudans", "Batswana", "Belarusian", "Belgian", "Belizean", 
+            "Beninese", "Bhutanese", "Bolivian", "Bosnian", "Brazilian", 
+            "British", "Bruneian", "Bulgarian", "Burkinabe", "Burmese", 
+            "Burundian", "Cambodian", "Cameroonian", "Canadian", "Cape Verdean", 
+            "Central African", "Chadian", "Chilean", "Chinese", "Colombian", 
+            "Comoran", "Congolese", "Costa Rican", "Croatian", "Cuban", 
+            "Cypriot", "Czech", "Danish", "Djibouti", "Dominican", "Dutch", 
+            "East Timorese", "Ecuadorean", "Egyptian", "Emirian", "Equatorial Guinean", 
+            "Eritrean", "Estonian", "Ethiopian", "Fijian", "Filipino", "Finnish", 
+            "French", "Gabonese", "Gambian", "Georgian", "German", "Ghanaian", 
+            "Greek", "Grenadian", "Guatemalan", "Guinean", "Guyanese", "Haitian", 
+            "Herzegovinian", "Honduran", "Hungarian", "I-Kiribati", "Icelander", 
+            "Indian", "Indonesian", "Iranian", "Iraqi", "Irish", "Israeli", 
+            "Italian", "Ivorian", "Jamaican", "Japanese", "Jordanian", 
+            "Kazakhstani", "Kenyan", "Kittian and Nevisian", "Kuwaiti", "Kyrgyz", 
+            "Laotian", "Latvian", "Lebanese", "Liberian", "Libyan", "Liechtensteiner", 
+            "Lithuanian", "Luxembourger", "Macedonian", "Malagasy", "Malawian", 
+            "Malaysian", "Maldivian", "Malian", "Maltese", "Marshallese", 
+            "Mauritanian", "Mauritian", "Mexican", "Micronesian", "Moldovan", 
+            "Monacan", "Mongolian", "Moroccan", "Mosotho", "Motswana", 
+            "Mozambican", "Namibian", "Nauruan", "Nepalese", "New Zealander", 
+            "Nicaraguan", "Nigerian", "Nigerien", "North Korean", "Northern Irish", 
+            "Norwegian", "Omani", "Pakistani", "Palauan", "Panamanian", 
+            "Papua New Guinean", "Paraguayan", "Peruvian", "Polish", "Portuguese", 
+            "Qatari", "Romanian", "Russian", "Rwandan", "Saint Lucian", "Salvadoran", 
+            "Samoan", "San Marinese", "Sao Tomean", "Saudi", "Scottish", 
+            "Senegalese", "Serbian", "Seychellois", "Sierra Leonean", "Singaporean", 
+            "Slovakian", "Slovenian", "Solomon Islander", "Somali", "South African", 
+            "South Korean", "Spanish", "Sri Lankan", "Sudanese", "Surinamer", 
+            "Swazi", "Swedish", "Swiss", "Syrian", "Taiwanese", "Tajik", 
+            "Tanzanian", "Thai", "Togolese", "Tongan", "Trinidadian or Tobagonian", 
+            "Tunisian", "Turkish", "Tuvaluan", "Ugandan", "Ukrainian", 
+            "Uruguayan", "Uzbekistani", "Venezuelan", "Vietnamese", "Welsh", 
+            "Yemenite", "Zambian", "Zimbabwean"
+        ];
+
+        // DOM Elements
+        const bookingForm = document.getElementById('bookingForm');
+        const confirmation = document.getElementById('confirmation');
+        const bookingSummary = document.getElementById('bookingSummary');
+        const experienceTypes = document.querySelectorAll('.experience-type');
+        const nationalityInput = document.getElementById('nationality');
+        const nationalitySuggestions = document.getElementById('nationalitySuggestions');
+        const visitDateInput = document.getElementById('visitDate');
+        const bookingCodeDisplay = document.getElementById('bookingCodeDisplay');
+        const cancelBookingBtn = document.getElementById('cancelBookingBtn');
+
+        // Initialize with today's date
+        const today = new Date().toISOString().split('T')[0];
+        visitDateInput.min = today;
+
+        // Generate a unique booking code
+        function generateBookingCode() {
+            const chars = 'ABCDEFGHJKLMNPQRSTUVWXYZ23456789';
+            let result = '';
+            for (let i = 0; i < 6; i++) {
+                result += chars.charAt(Math.floor(Math.random() * chars.length));
+            }
+            return result;
+        }
+
+        // Format time with AM/PM for display
+        function formatTimeForDisplay(timeString) {
+            if (!timeString) return '';
+            
+            let [hours, minutes] = timeString.split(':');
+            hours = parseInt(hours);
+            let period = 'AM';
+            
+            if (hours >= 12) {
+                period = 'PM';
+                if (hours > 12) {
+                    hours -= 12;
+                }
+            } else if (hours === 0) {
+                hours = 12;
+            }
+            
+            return `${hours}:${minutes} ${period}`;
+        }
+
+        // Event Listeners
+        experienceTypes.forEach(radio => {
+            radio.addEventListener('change', updateExperienceDisplay);
+        });
+
+        // Nationality autocomplete
+        nationalityInput.addEventListener('input', function() {
+            const input = this.value.toLowerCase();
+            const suggestions = nationalities.filter(n => 
+                n.toLowerCase().includes(input)
+            ).slice(0, 5);
+            
+            if (input.length > 1 && suggestions.length > 0) {
+                nationalitySuggestions.innerHTML = suggestions.map(n => 
+                    `<div class="suggestion-item">${n}</div>`
+                ).join('');
+                nationalitySuggestions.style.display = 'block';
+            } else {
+                nationalitySuggestions.style.display = 'none';
+            }
+        });
+
+        // Hide suggestions when clicking elsewhere
+        document.addEventListener('click', function(e) {
+            if (e.target !== nationalityInput) {
+                nationalitySuggestions.style.display = 'none';
+            }
+        });
+
+        // Select suggestion
+        nationalitySuggestions.addEventListener('click', function(e) {
+            if (e.target.classList.contains('suggestion-item')) {
+                nationalityInput.value = e.target.textContent;
+                nationalitySuggestions.style.display = 'none';
+            }
+        });
+
+        // Form validation
+        bookingForm.addEventListener('submit', function(event) {
+            event.preventDefault();
+            event.stopPropagation();
+            
+            // Validate main form
+            if (!bookingForm.checkValidity()) {
+                bookingForm.classList.add('was-validated');
+                return;
+            }
+            
+            // Validate experience selection
+            const selectedExperience = document.querySelector('.experience-type:checked');
+            if (!selectedExperience) {
+                alert('Please select an experience type');
+                return;
+            }
+            
+            // Validate farm options if selected
+            if (selectedExperience.value === 'farm') {
+                const farmChoice = document.querySelector('.farm-choice:checked');
+                if (!farmChoice) {
+                    document.querySelector('.farm-invalid').style.display = 'block';
+                    document.getElementById('farmOptions').classList.add('is-invalid');
+                    return;
+                }
+            }
+            
+            // Validate museum options if selected
+            if (selectedExperience.value === 'museum') {
+                const museumChoice = document.querySelector('.museum-choice:checked');
+                if (!museumChoice) {
+                    document.querySelector('.museum-invalid').style.display = 'block';
+                    document.getElementById('museumOptions').classList.add('is-invalid');
+                    return;
+                }
+            }
+            
+            // Validate pearl options if selected
+            if (selectedExperience.value === 'customize') {
+                const pearlType = document.querySelector('.pearl-type:checked');
+                if (!pearlType) {
+                    document.querySelector('.pearl-invalid').style.display = 'block';
+                    return;
+                }
+            }
+            
+            // If all valid, proceed with submission
+            submitBooking();
+        });
+
+        // Cancel booking button
+        cancelBookingBtn.addEventListener('click', function() {
+            if (confirm('Are you sure you want to cancel this booking?')) {
+                // In a real application, you would send this to your server
+                alert('Your booking has been cancelled. A confirmation has been sent to your email.');
+                
+                // Here you would typically:
+                // 1. Send cancellation request to server
+                // 2. Update the admin dashboard
+                // 3. Send confirmation email
+                
+                // For demo purposes, we'll just reset the form
+                bookingForm.reset();
+                bookingForm.style.display = 'block';
+                confirmation.style.display = 'none';
+                bookingForm.classList.remove('was-validated');
+            }
+        });
+
+        // Functions
+        function updateExperienceDisplay() {
+            const selectedExperience = document.querySelector('.experience-type:checked');
+            
+            // Hide all options first
+            document.getElementById('farmOptions').style.display = 'none';
+            document.getElementById('customizeOptions').style.display = 'none';
+            document.getElementById('museumOptions').style.display = 'none';
+            document.querySelector('.farm-invalid').style.display = 'none';
+            document.querySelector('.museum-invalid').style.display = 'none';
+            document.getElementById('farmOptions').classList.remove('is-invalid');
+            document.getElementById('museumOptions').classList.remove('is-invalid');
+            document.querySelector('.pearl-invalid').style.display = 'none';
+            
+            if (!selectedExperience) return;
+            
+            if (selectedExperience.value === 'farm') {
+                document.getElementById('farmOptions').style.display = 'block';
+            } else if (selectedExperience.value === 'customize') {
+                document.getElementById('customizeOptions').style.display = 'block';
+            } else if (selectedExperience.value === 'museum') {
+                document.getElementById('museumOptions').style.display = 'block';
+            }
+        }
+
+        function submitBooking() {
+            // Generate booking code
+            const bookingCode = generateBookingCode();
+            bookingCodeDisplay.textContent = bookingCode;
+            
+            // Get form values
+            const name = document.getElementById('name').value;
+            const email = document.getElementById('email').value;
+            const phone = document.getElementById('phone').value;
+            const nationality = document.getElementById('nationality').value;
+            const visitDate = document.getElementById('visitDate').value;
+            const visitTime = document.getElementById('visitTime').value;
+            const formattedTime = formatTimeForDisplay(visitTime);
+            const location = document.getElementById('location').value;
+            const experienceType = document.querySelector('.experience-type:checked').value;
+            
+            // Create booking summary
+            let summaryHTML = `
+                <h4>Booking Details</h4>
+                <p><strong>Booking Code:</strong> ${bookingCode}</p>
+                <p><strong>Name:</strong> ${name}</p>
+                <p><strong>Email:</strong> ${email}</p>
+                <p><strong>Phone:</strong> ${phone}</p>
+                <p><strong>Nationality:</strong> ${nationality}</p>
+                <p><strong>Visit Date:</strong> ${new Date(visitDate).toDateString()} at ${formattedTime}</p>
+                <p><strong>Location:</strong> ${location}</p>
+                <p><strong>Experience Type:</strong> ${getExperienceTypeDisplay(experienceType)}</p>
+            `;
+
+            if (experienceType === 'farm') {
+                const farmChoice = document.querySelector('.farm-choice:checked');
+                if (farmChoice) {
+                    summaryHTML += `<p><strong>Farm Experience:</strong> ${farmChoice.value}</p>`;
+                }
+            } else if (experienceType === 'museum') {
+                const museumChoice = document.querySelector('.museum-choice:checked');
+                if (museumChoice) {
+                    summaryHTML += `<p><strong>Museum:</strong> ${museumChoice.value === 'coronMuseum' ? 'Coron/Sinamay Pearl Museum' : 'Boracay Pearl Museum'}</p>`;
+                }
+            } else if (experienceType === 'customize') {
+                const pearlType = document.querySelector('.pearl-type:checked');
+                const materials = Array.from(document.querySelectorAll('.material:checked')).map(m => m.value);
+                const jewelry = Array.from(document.querySelectorAll('.jewelry:checked')).map(j => j.value);
+                const customNotes = document.getElementById('customNotes').value;
+                
+                if (pearlType) {
+                    summaryHTML += `<p><strong>Pearl Type:</strong> ${pearlType.value}</p>`;
+                }
+                if (materials.length > 0) {
+                    summaryHTML += `<p><strong>Materials:</strong> ${materials.join(', ')}</p>`;
+                }
+                if (jewelry.length > 0) {
+                    summaryHTML += `<p><strong>Jewelry:</strong> ${jewelry.join(', ')}</p>`;
+                }
+                if (customNotes) {
+                    summaryHTML += `<p><strong>Special Requests:</strong> ${customNotes}</p>`;
+                }
+            }
+
+            bookingSummary.innerHTML = summaryHTML;
+            
+            // Show confirmation and hide form
+            bookingForm.style.display = 'none';
+            confirmation.style.display = 'block';
+            
+            // In a real application, you would:
+            // 1. Send this data to your server
+            // 2. Store it in a database with the booking code
+            // 3. Send a confirmation email with the booking code
+            // 4. Make it available in the admin dashboard
+            
+            console.log('Booking submitted:', {
+                bookingCode,
+                name,
+                email,
+                phone,
+                nationality,
+                visitDate,
+                visitTime,
+                location,
+                experienceType
+            });
+            
+            // Here you would typically call your email sending function
+            // sendConfirmationEmail(email, bookingCode, summaryHTML);
+        }
+
+        function getExperienceTypeDisplay(type) {
+            switch(type) {
+                case 'visitOnly': return 'Visit Only';
+                case 'museum': return 'Pearl Museum Visit';
+                case 'farm': return 'Pearl Farm Experience';
+                case 'customize': return 'Pearl Customization';
+                default: return type;
+            }
+        }
+
+        // Initialize
+        updateExperienceDisplay();
+    </script>
+</body>
+</html>
